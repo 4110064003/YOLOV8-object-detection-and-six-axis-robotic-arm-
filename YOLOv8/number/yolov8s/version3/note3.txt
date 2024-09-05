@@ -1,0 +1,14 @@
+!yolo task=detect mode=train model=yolov8s.pt data={dataset.location}/data.yaml epochs=25 imgsz=800 plots=True
+
+total iteam :395
+
+size=640*640
+
+Augmentations
+Outputs per training example: 3
+Flip: Horizontal
+Rotation: Between -20° and +20°
+
+TRAIN SET 86% 338 Images
+VALID SET 10% 39  Images
+TEST  SET 5%  18  Images

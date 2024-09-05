@@ -1,0 +1,2 @@
+#conda activated labelme
+#labelme

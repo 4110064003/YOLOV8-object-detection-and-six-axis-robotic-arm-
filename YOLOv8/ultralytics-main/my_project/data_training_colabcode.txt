@@ -1,0 +1,22 @@
+#import altralytics
+pip install ultralytics
+import ultralytics
+ultralytics.checks()
+
+# download pretrained segmentaion model:yolov8s-seg.pt
+!wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8s-seg.pt
+
+# download dataset
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="LJH351HsJTwN9AODKmXJ")
+project = rf.workspace("cubelableling").project("number_detection-oaxny")
+version = project.version(7)
+dataset = version.download("yolov8")
+
+
+# #change the path in data.yaml
+
+# #trian data
+!yolo segment train data=/content/cube detection_new-1/data.yaml model=/content/yolov8s-seg.pt epochs=10 imgsz=640

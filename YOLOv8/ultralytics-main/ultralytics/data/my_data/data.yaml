@@ -1,0 +1,13 @@
+train: D:\ultralytics-main\ultralytics\data\my_data\train\images
+val: D:\ultralytics-main\ultralytics\data\my_data\valid\images
+test: D:\ultralytics-main\ultralytics\data\my_data\test\images
+
+nc: 3
+names: ['BLUE', 'GREEN', 'RED']
+
+roboflow:
+  workspace: cubelableling
+  project: cube_detection_new
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/cubelableling/cube_detection_new/dataset/1

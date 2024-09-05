@@ -1,0 +1,1 @@
+!yolo task=detect mode=train model=yolov8s-seg.pt data={dataset.location}/data.yaml epochs=80 imgsz=640 plots=True

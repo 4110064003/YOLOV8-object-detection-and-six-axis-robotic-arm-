@@ -1,0 +1,13 @@
+train: D:\ultralytics-main\number_data\train\images
+val: D:\ultralytics-main\number_data\valid\images
+test: D:\ultralytics-main\number_data\test\images
+
+nc: 15
+names: ['circle1', 'circle2', 'circle3', 'circle4', 'circle5', 'pantagon1', 'pantagon2', 'pantagon3', 'pantagon4', 'pantagon5', 'triangle1', 'triangle2', 'triangle3', 'triangle4', 'triangle5']
+
+roboflow:
+  workspace: cubelableling
+  project: number_detection-oaxny
+  version: 4
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/cubelableling/number_detection-oaxny/dataset/4
