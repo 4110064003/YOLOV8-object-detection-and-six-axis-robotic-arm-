@@ -1,7 +1,0 @@
-xArm ESP32 Tutorial--Small Deviation Adjustmnet
-
-https://youtu.be/CeeaQBFchyk
-
-xArm ESP32 Tutorial--Large Deviation Adjustment
-
-https://youtu.be/Sx1iqbnn5SI

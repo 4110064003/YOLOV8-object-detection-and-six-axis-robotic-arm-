@@ -1,3 +1,0 @@
-xArm ESP32 Robotic Arm Introduction
-
-Video Link: https://youtu.be/4QMga6TCSn8

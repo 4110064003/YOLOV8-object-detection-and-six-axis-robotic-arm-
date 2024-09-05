@@ -1,0 +1,7 @@
+Arm ESP32 Tutorial--Getting Ready
+
+https://youtu.be/tin-aUlqQi4
+
+xArm ESP32 Tutorial--Assembly
+
+https://youtu.be/qbWrL6kfNqE
