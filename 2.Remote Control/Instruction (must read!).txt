@@ -1,0 +1,1 @@
+The opearation method of xArm 1S version shown in the video is the same as that of xArm ESP32.
