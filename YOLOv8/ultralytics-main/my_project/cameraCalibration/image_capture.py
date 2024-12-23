@@ -31,7 +31,7 @@ if __name__ == "__main__":
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
-    image_number = 1  # 初始圖片標號為1
+    image_number = 9  # 初始圖片標號為1
     while True:
         capture_image(image_number, folder_path)
         image_number += 1  # 更新圖片編號

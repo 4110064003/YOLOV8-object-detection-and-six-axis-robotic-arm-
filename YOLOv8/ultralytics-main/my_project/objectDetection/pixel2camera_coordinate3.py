@@ -56,12 +56,12 @@ def main():
             print("Failed to capture image")
             break
 
-        screen_width = 1500
-        screen_height = 800
-        window_width = screen_width // 2
-        window_height = screen_height // 2
-        cv2.namedWindow('Press "s" to capture an image (or "q" to quit)',cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('Press "s" to capture an image (or "q" to quit)',window_width,window_height)
+        # screen_width = 1500
+        # screen_height = 800
+        # window_width = screen_width // 2
+        # window_height = screen_height // 2
+        # cv2.namedWindow('Press "s" to capture an image (or "q" to quit)',cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow('Press "s" to capture an image (or "q" to quit)',window_width,window_height)
         cv2.imshow('Press "s" to capture an image (or "q" to quit)', frame)
         
         key = cv2.waitKey(1) & 0xFF
@@ -146,12 +146,12 @@ def main():
                             cv2.rectangle(frame, (int(box2[0]), int(box2[1])), (int(box2[2]), int(box2[3])), (200, 200, 200), 2)
                             cv2.circle(frame, (int(x_center2), int(y_center2)), 5, (0, 0, 255), -1)
                             cv2.putText(frame, label2, (int(box2[0]), int(box2[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 2)
-            screen_width = 1500
-            screen_height = 800
-            window_width = screen_width // 2
-            window_height = screen_height // 2
-            cv2.namedWindow('YOLOv8 Detection',cv2.WINDOW_NORMAL)
-            cv2.resizeWindow('YOLOv8 Detection',window_width,window_height)
+            # screen_width = 1500
+            # screen_height = 800
+            # window_width = screen_width // 2
+            # window_height = screen_height // 2
+            # cv2.namedWindow('YOLOv8 Detection',cv2.WINDOW_NORMAL)
+            # cv2.resizeWindow('YOLOv8 Detection',window_width,window_height)
             cv2.imshow('YOLOv8 Detection', frame)
 
             for result in unique_results:

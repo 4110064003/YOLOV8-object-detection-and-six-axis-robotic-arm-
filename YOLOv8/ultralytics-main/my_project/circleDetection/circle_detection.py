@@ -1,4 +1,4 @@
-#畫面中圓形的偵測和圓心的標註
+#畫面中圓形的偵測和圓心的標註，與本專題無關
 import cv2
 import numpy as np
 

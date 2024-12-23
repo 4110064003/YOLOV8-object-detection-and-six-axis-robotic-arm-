@@ -18,55 +18,55 @@ print(objp)
 
 # 存储棋盘格的三维点和图像平面的二维点
 objpoints = []  # 3d point in real world space
-imgpoints_left = []  # 2d points in left image plane.
+imgpoints = []  # 2d points in image plane.
 
 # 读取标定图片
-image_nums = 17
+image_nums = 31
 for i in range(1,image_nums):
     # 更換成電腦上標定圖像的路徑
-    img_left = cv2.imread(r"D:\camera_calibration\chessboard2\image_%d.jpg" % i)
-    #img_left = cv2.imread(r"C:\Users\acer\Downloads\test2.jpg")
-    if img_left is None:
+    img = cv2.imread(r"D:\camera_calibration\chessboard2\image_%d.jpg" % i)
+    #img = cv2.imread(r"C:\Users\acer\Downloads\test2.jpg")
+    if img is None:
         print(f"Image {i} not found or could not be loaded.")
         continue
 
-    gray_left = cv2.cvtColor(img_left, cv2.COLOR_BGR2GRAY)
-    cv2.imshow(f"Gray Image {i}", gray_left)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    cv2.imshow(f"Gray Image {i}", gray)
     cv2.waitKey(100)  # 显示0.5秒
     cv2.destroyAllWindows()
     # 調整灰度圖像對比圖
-    #gray_left = cv2.equalizeHist(gray_left)
-    #cv2.imshow(f"Equalized Gray Image {i}", gray_left)
+    #gray = cv2.equalizeHist(gray)
+    #cv2.imshow(f"Equalized Gray Image {i}", gray)
     #cv2.waitKey(500)
 
     # 自動獲取圖像寬高
-    h, w = gray_left.shape
+    h, w = gray.shape
 
     # 提取棋盤格角點
-    ret_left, corners_left = cv2.findChessboardCorners(gray_left, (board_cols, board_rows), None)
+    ret, corners = cv2.findChessboardCorners(gray, (board_cols, board_rows), None)
 
-    if ret_left:
+    if ret:
         print("Find %dth images' corners..." % i)
         objpoints.append(objp)
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.01)
-        corners2_left = cv2.cornerSubPix(gray_left, corners_left, (11, 11), (-1, -1), criteria)
-        imgpoints_left.append(corners2_left)
+        corners2 = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
+        imgpoints.append(corners2)
 
         # 繪製棋盤格角點
-        img_left = cv2.drawChessboardCorners(img_left, (board_cols, board_rows), corners2_left, ret_left)
-        cv2.imshow("left img", img_left)
+        img = cv2.drawChessboardCorners(img, (board_cols, board_rows), corners2, ret)
+        cv2.imshow("img", img)
         cv2.waitKey(1000)
     else:
         print(f"Could not find corners in {i}th image.")
 
 # 相機標定
-if len(objpoints) == 0 or len(imgpoints_left) == 0:
+if len(objpoints) == 0 or len(imgpoints) == 0:
     print("No corners found in any images.")
 else:
-    ret1, mtx_left, dist_left, rvecs1, tvecs1 = cv2.calibrateCamera(objpoints, imgpoints_left, (w, h), None, None)
+    ret1, mtx, dist, rvecs1, tvecs1 = cv2.calibrateCamera(objpoints, imgpoints, (w, h), None, None)
     print("ret", ret1)
-    print("mtx_left:", mtx_left)  # 內參矩陣
-    print("dist_left", dist_left)  # 畸变系数
+    print("mtx:", mtx)  # 內參矩陣
+    print("dist", dist)  # 畸变系数
     print("rvecs1",rvecs1)  #   旋轉矩陣
-    print("tvecs1",tvecs1)  #   評移向量
+    print("tvecs1",tvecs1)  #   平移向量
 cv2.destroyAllWindows()

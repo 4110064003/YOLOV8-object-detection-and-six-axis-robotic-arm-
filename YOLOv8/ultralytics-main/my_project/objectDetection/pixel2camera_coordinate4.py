@@ -68,7 +68,7 @@ def format_message(data):
 def send_data_to_server(data):
     # 設定伺服器的 IP 地址和端口
     server_ip = '192.168.145.176'
-    server_port = 1000   
+    server_port = 2000   
     # 創建一個 TCP 客戶端 socket
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -89,52 +89,8 @@ def send_data_to_server(data):
     finally:
         # 關閉連接
         client.close()
-
-# 新的物件要加入 unique_results 時進行檢查
-def add_object_to_results(label, x_corrected, y_corrected, z=50, threshold=10):
-    # 遍歷已存在的物件來檢查是否有相似的座標
-    for key, value in unique_results.items():
-        _, coords = value.split(',')
-        x_existing, y_existing, z_existing = map(int, coords.strip('()').split(','))
-
-        # 計算座標之間的歐氏距離
-        distance = math.sqrt((x_corrected - x_existing) ** 2 + (y_corrected - y_existing) ** 2)
-
-        if distance < threshold:
-            print(f"Found similar object: {label} at ({x_corrected}, {y_corrected}) is close to {key} at ({x_existing}, {y_existing})")
-            # 如果座標接近，選擇保留現有的或替換
-            return
-    
-    # 如果沒有接近的物件，則加入 unique_results
-    unique_results[label] = f"{label},({int(x_corrected)},{int(y_corrected)},{z})"    
-# def add_object_to_results(label, corrected_coordinates):
-#     x_corrected, y_corrected = corrected_coordinates[:2]
-#     z_value = 50  # 固定的 z 值
-
-#     # 創建結果字符串
-#     result_string = f"{label},({int(x_corrected)},{int(y_corrected)},{z_value})"
-    
-#     # 將結果加入到 unique_results 中
-#     if label in unique_results:
-#         existing_coords = unique_results[label]
-#         existing_label, existing_coords_str = existing_coords.split(',', 1)
-#         print(1)
-#         print(existing_label,existing_coords_str)
-#         # 拆分現有的座標部分
-#         existing_x, existing_y, existing_z = map(int, existing_coords_str.strip('()').split(','))
-#         print(1)
-#         print(existing_x, existing_y, existing_z)
-#         new_x, new_y, new_z = map(int, existing_coords_str.strip('()').split(','))
-#         print(new_x, new_y, new_z)
-#         # 如果新座標與現有座標太接近，則不更新
-#         if abs(existing_x - new_x) < 1 and abs(existing_y - new_y) < 1:
-#             return
-
-#     # 如果沒有發生重複，則直接更新
-#     unique_results[label] = result_string
         
-# unique_results = set()#存儲並過濾重複的結果
-unique_results = {}#存儲並過濾重複的結果
+unique_results = set()#存儲並過濾重複的結果
 def main():
     # Open a video capture object (source=1 indicates the first camera)
     cap = cv2.VideoCapture(1)
@@ -161,8 +117,8 @@ def main():
         if key == ord('q'):
             break
         elif key == ord('s'):  # 's' key is pressed
-            results1 = model1(frame, show=False,conf=0.8)#number detect
-            results2 = model2(frame, show=False,conf=0.8)#cube detect
+            results1 = model1(frame, show=False,conf=0.7)#number detect
+            results2 = model2(frame, show=False,conf=0.7)#cube detect
 
             #unique_results = set()
             for result1, result2 in zip(results1, results2):
@@ -194,27 +150,52 @@ def main():
                         x_corrected2 = (camera_coordinates2[0] - (0.03 * 100) * correction_factor) if camera_coordinates2[0] >= 0 else (camera_coordinates2[0] + (0.03 * 100) * correction_factor)
                         y_corrected2 = (camera_coordinates2[1] - (0.03 * 100) * correction_factor) if camera_coordinates2[1] >= 0 else (camera_coordinates2[1] + (0.03 * 100) * correction_factor)
 
-                        cv2.rectangle(frame, (int(box1[0]), int(box1[1])), (int(box1[2]), int(box1[3])), (0, 255, 0), 2)
+                        cv2.rectangle(frame, (int(box1[0]), int(box1[1])), (int(box1[2]), int(box1[3])), (100, 100, 100), 2)
                         cv2.circle(frame, (int(x_center1), int(y_center1)), 5, (0, 0, 255), -1)
-                        cv2.putText(frame, label1, (int(box1[0]), int(box1[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                        cv2.putText(frame, label1, (int(box1[0]), int(box1[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 100, 100), 2)
 
-                        cv2.rectangle(frame, (int(box2[0]), int(box2[1])), (int(box2[2]), int(box2[3])), (255, 0, 0), 2)
+                        cv2.rectangle(frame, (int(box2[0]), int(box2[1])), (int(box2[2]), int(box2[3])), (200, 200, 200), 2)
                         cv2.circle(frame, (int(x_center2), int(y_center2)), 5, (0, 0, 255), -1)
-                        cv2.putText(frame, label2, (int(box2[0]), int(box2[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+                        cv2.putText(frame, label2, (int(box2[0]), int(box2[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 2)
                         
                         
-                        # object_info1 = (f"{label2},({int(x_corrected2)},{int(y_corrected2)},{50})")
-                        # object_info2 = (f"{label1},({int(x_corrected1)},{int(y_corrected1)},{50})")
-                        # unique_results.add(object_info1)
-                        # unique_results.add(object_info2)
-                        # print(unique_results)
-                        unique_results[label2] = f"{label2},({int(x_corrected2)},{int(y_corrected2)},{50})"
-                        unique_results[label1] = f"{label1},({int(x_corrected1)},{int(y_corrected1)},{50})"
-            print(list(unique_results.values()))
-            #             add_object_to_results(label2,[x_corrected2, y_corrected2])
-            #             add_object_to_results(label1,[x_corrected1, y_corrected1])
-            # print(list(unique_results.values()))  
+                        object_info1 = (f"{label2},({int(x_corrected2)},{int(y_corrected2)},{50})")
+                        object_info2 = (f"{label1},({int(x_corrected1)},{int(y_corrected1)},{50})")
+                        unique_results.add(object_info1)
+                        unique_results.add(object_info2)
+                        print(unique_results)
 
+                        print("可選擇的物件和目標列表:")
+                        for idx, item in enumerate(unique_results):
+                            print(f"{idx + 1}: {item}")
+
+                        # 要求使用者選擇物件和目標
+                        object_choice = int(input("請選擇物件 (輸入數字): ")) - 1
+                        destination_choice = int(input("請選擇目標 (輸入數字): ")) - 1
+
+                        # 將選擇結果轉換成清單以便取用
+                        unique_results_list = list(unique_results)
+
+                        # 確認選擇有效
+                        if 0 <= object_choice < len(unique_results_list) and 0 <= destination_choice < len(unique_results_list):
+                            object_list = unique_results_list[object_choice]
+                            destination_list = unique_results_list[destination_choice]
+                            
+                            # 將物件和目標資訊合併成一個字串
+                            data_to_send = f"{object_list};{destination_list}"
+
+                            # 將資料轉成手臂端可接收的格式
+                            formatted_object, formatted_destination = format_message(data_to_send)
+
+                            # 將資料傳給server
+                            if formatted_object and formatted_destination:
+                                # send_data_to_server(formatted_object)
+                                # send_data_to_server(formatted_destination)
+                                combined_data = f"{formatted_object} {formatted_destination}"
+                                send_data_to_server(combined_data)
+                            
+                        else:
+                            print("選擇無效，請重新運行程式並選擇有效的選項。")
             screen_width = 1500
             screen_height = 800
             window_width = screen_width // 2
@@ -223,48 +204,6 @@ def main():
             cv2.resizeWindow('YOLOv8 Detection',window_width,window_height)
             cv2.imshow('YOLOv8 Detection', frame)
             cv2.waitKey(50)
-
-            print("可選擇的物件和目標列表:")
-            # for idx, item in enumerate(unique_results):
-            #     print(f"{idx + 1}: {item}")
-            for idx, item in enumerate(unique_results.values()):
-                print(f"{idx + 1}: {item}")
-
-            # 要求使用者選擇物件和目標
-            object_choice = int(input("請選擇物件 (輸入數字): ")) - 1
-            destination_choice = int(input("請選擇目標 (輸入數字): ")) - 1
-
-            # 將選擇結果轉換成清單以便取用
-            # unique_results_list = list(unique_results)
-            unique_results_list = list(unique_results.values())
-            # 確認選擇有效
-            if 0 <= object_choice < len(unique_results_list) and 0 <= destination_choice < len(unique_results_list):
-                object_list = unique_results_list[object_choice]
-                destination_list = unique_results_list[destination_choice]
-                
-                # 將物件和目標資訊合併成一個字串
-                data_to_send = f"{object_list};{destination_list}"
-
-                # 將資料轉成手臂端可接收的格式
-                formatted_object, formatted_destination = format_message(data_to_send)
-
-                # 將資料傳給server
-                if formatted_object and formatted_destination:
-                    # send_data_to_server(formatted_object)
-                    # send_data_to_server(formatted_destination)
-                    combined_data = f"{formatted_object} {formatted_destination}"
-                    send_data_to_server(combined_data)
-                
-            else:
-                print("選擇無效，請重新運行程式並選擇有效的選項。")
-            # screen_width = 1500
-            # screen_height = 800
-            # window_width = screen_width // 2
-            # window_height = screen_height // 2
-            # cv2.namedWindow('YOLOv8 Detection',cv2.WINDOW_NORMAL)
-            # cv2.resizeWindow('YOLOv8 Detection',window_width,window_height)
-            # cv2.imshow('YOLOv8 Detection', frame)
-            # cv2.waitKey(50)
 
     cap.release()
     cv2.destroyAllWindows()
