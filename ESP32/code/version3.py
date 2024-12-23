@@ -1,4 +1,7 @@
-#1~6+a,b
+#將操作範圍以九宮的方式劃分為編號1~6的區塊以及a、b 區塊，根據輸入指令操控手臂運行動作組，夾取方塊制止定點擺放
+# 1 2 3
+# 4 5 6
+# a R b
 from BusServo import BusServo
 from actions import action_groups
 from default_position import action_groups_default

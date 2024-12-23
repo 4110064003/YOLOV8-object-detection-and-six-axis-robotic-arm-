@@ -1,4 +1,17 @@
-#1~6+a,b
+#將操作範圍以九宮的方式劃分為編號1~6的區塊以及a、b 區塊，
+#夾取方塊至指定點擺放之後，沿原路徑夾回初始位置放置
+#輸入值改為兩個座標點，分別為相機檢測到數字目標板中心點的相機座標值、方塊中心點的相機座標值，
+#將擺放在指定區域(區域a或區域b)的不同顏色方塊(紅色或藍色或綠色)移動至目標數字板所在區域。
+
+#括弧中的數字為x、y方向邊界值、R為手臂放置位置
+#(27)----------------------
+# |   1   |   2   |   3   |
+#(15)----------------------
+# |   4   |   5   |   6   |
+#(1)-----------------------
+# |   a   |   R   |   b   |
+#(-23)  (-8)     (5)    (20)
+
 from BusServo import BusServo
 from actions import action_groups
 from initial_position import action_groups_init
@@ -176,13 +189,13 @@ if __name__ == '__main__':
   
   while True:
     coor1=[]
-    coor1.append(int(input("請輸入數字板x座標:")))
-    coor1.append(int(input("請輸入數字板y座標:")))
+    coor1.append(int(input("請輸入數字板x座標:")))#請根據最上方提供的邊界值輸入x座標
+    coor1.append(int(input("請輸入數字板y座標:")))#請根據最上方提供的邊界值輸入y座標
     #coor.append(int(input("請輸入z座標:")))
     #run_action_group(bus_servo,action_group_init)
     coor2=[]
-    coor2.append(int(input("請輸入方塊x座標:")))
-    coor2.append(int(input("請輸入方塊y座標:")))
+    coor2.append(int(input("請輸入方塊x座標:")))#請根據最上方提供的邊界值輸入x座標
+    coor2.append(int(input("請輸入方塊y座標:")))#請根據最上方提供的邊界值輸入y座標
     time.sleep_ms(1000)
 
     ArmControl(coor1,coor2,2500)

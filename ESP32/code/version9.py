@@ -23,8 +23,8 @@ class ArmController:
         arm_x = self.A[0][0] * input_x + self.A[0][1] * input_y + self.b[0]
         arm_y = self.A[1][0] * input_x + self.A[1][1] * input_y + self.b[1]
         
-        arm_x = arm_x * 2
-        arm_y = arm_y * 1.6
+        arm_x = arm_x * 2 #根據實際情況微調
+        arm_y = arm_y * 1.6 #根據實際情況微調
         
         print("Converted Coordinates: X={}, Y={}".format(arm_x, arm_y))
         return arm_x, arm_y

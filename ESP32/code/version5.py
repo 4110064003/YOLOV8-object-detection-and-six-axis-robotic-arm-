@@ -1,4 +1,14 @@
-#1~6+a,b
+#將操作範圍以九宮的方式劃分為編號1~6的區塊以及a、b 區塊，根據輸入物件座標位置(相機座標系下)呼叫對應動作組，夾取方塊至指定點擺放之後，延原路徑夾回初始位置放置
+#方塊限制擺放在a位置
+#括弧中的數字為x、y方向邊界值、R為手臂放置位置
+#(27)----------------------
+# |   1   |   2   |   3   |
+#(15)----------------------
+# |   4   |   5   |   6   |
+#(1)-----------------------
+# |   a   |   R   |   b   |
+#(-23)  (-8)     (5)    (20)
+
 from BusServo import BusServo
 from actions import action_groups
 from initial_position import action_groups_init
@@ -101,8 +111,8 @@ if __name__ == '__main__':
   
   while True:
     coor=[]
-    coor.append(int(input("請輸入x座標:")))
-    coor.append(int(input("請輸入y座標:")))
+    coor.append(int(input("請輸入x座標:")))#請根據最上方提供的邊界值輸入x座標
+    coor.append(int(input("請輸入y座標:")))#請根據最上方提供的邊界值輸入y座標
     #coor.append(int(input("請輸入z座標:")))
     #run_action_group(bus_servo,action_group_init)
     time.sleep_ms(1000)

@@ -1,3 +1,11 @@
+#將操作範圍以九宮的方式劃分為編號1~6的區塊以及a、b 區塊，
+#夾取方塊至指定點擺放之後，延原路徑夾回初始位置放置
+#輸入值加入物件名稱，分別為相機檢測到數字目標板(類別名稱)(中心點的相機座標值)、方塊(類別名稱)(中心點的相機座標值)，
+#將擺放在指定區域(區域a或區域b)的不同顏色方塊(紅色或藍色或綠色)移動至目標數字板所在區域。
+#精簡優化程式碼
+# 1 2 3
+# 4 5 6
+# a R b
 from BusServo import BusServo
 from actions import action_groups
 from initial_position import action_groups_init
@@ -87,8 +95,8 @@ if __name__ == '__main__':
     b = BusServo(tx=26, rx=35, tx_en=25, rx_en=12)
 
     while True:
-        object_input = input("object_label (space) x_coor (space) y_coor: ")
-        destination_input = input("destination_label (space) x_coor (space) y_coor: ")
+        object_input = input("object_label (space) x_coor (space) y_coor: ")#請根據最上方提供的邊界值輸入x座標
+        destination_input = input("destination_label (space) x_coor (space) y_coor: ")#請根據最上方提供的邊界值輸入y座標
 
         object_list = object_input.split()
         destination_list = destination_input.split()
